@@ -48,15 +48,14 @@ const Card = ({c, handPos}) => {
     <div
     ref={drag}
     style={{
-      opacity: 1,
       fontSize: 25,
       fontWeight: 'bold',
       cursor: 'move',
     }}>
       <div style = {{width: 200, height: 300, backgroundColor: '#424242', margin: 10}}>
-        <p style = {{color: '#fff'}}>Name: {c.name} </p>
-        <p style = {{color: '#fff'}}>Cost: {c.value} </p>
-        <p style = {{color: '#fff'}}>Id: {c.id}</p>
+        <p style = {{margin: 0, color: '#fff'}}>Name: {c.name} </p>
+        <p style = {{margin: 0, color: '#fff'}}>Cost: {c.value} </p>
+        <p style = {{margin: 0, color: '#fff'}}>Id: {c.id}</p>
       </div>
     </div>
   )
@@ -100,8 +99,8 @@ const CardInPlay = ({c}) => {
     <div>
       <div style = {{width: 200, height: 300, backgroundColor: '#424242', margin: 10}}>
         <p style = {{margin: 0, color: '#fff'}}>Name: {c.name} </p>
-        <p style = {{color: '#fff'}}>Cost: {c.value} </p>
-        <p style = {{color: '#fff'}}>Id: {c.id}</p>
+        <p style = {{margin: 0, color: '#fff'}}>Cost: {c.value} </p>
+        <p style = {{margin: 0, color: '#fff'}}>Id: {c.id}</p>
       </div>
     </div>
   )
@@ -119,6 +118,7 @@ const Board = (props) => {
     <div>
        {/* Deck to draw from */}
        <div style = {{display: 'flex', justifyContent: 'left'}}>
+       <div style = {{display: 'flex', justifyContent: 'left'}}>
           <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}} onClick = {e => handleDeckDraw(e)}>
             Deck: {props.G.deck.length}
           </div>
@@ -130,6 +130,7 @@ const Board = (props) => {
             <Card key = {i} c = {c} handPos = {i} />
           )
         })}
+      </div>
       </div>
       {/* Board Render */}
       <div style = {{display: 'flex'}}>
