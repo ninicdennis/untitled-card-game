@@ -1,6 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Untitled Card Game
 
-## Getting Started
+This is a card game I am creating from scratch using boardgame.io and Next.js. The purpose of this was to challenge me into creating something I didn't really think was possible within a react based application. As of right now, this is currently holding as a Proof of Concept to see if I am able to maintain a bigger project on myself. 
+
+The concept is similar to Hearthstone, as I feel that genre needs some more web love. So I will be attempting a decent recreation, but not nearly as polished, of course. (Who knows, maybe in the future I will get this actually completed.)
+
+## TODO
+- [x] Initial Card Setup
+- [x] Basic board layout created with drag events to specific positions
+- [ ] Player "Mana Pool" 
+- [ ] Turn Phasing and order
+- [ ] Player HP tracking
+- [ ] Basic Card Attacks and defending
+- [ ] "Spells" and different card types
+- [ ] End Game Screen
+- [ ] Database hookups
+
+## Other Plans / Ideas
+
+The eventual goal once this POC is completed is to have a website built within this website in order to handle all the user player base things such as creating decks, and have it all contained within this single application. Multiplayer will also be handled within boardgame.io, with the eventual goal being a fully playable card game within the web. Designs and such will come later, as I am not a designer at all, so everything will look pretty ugly for a while!
+
+## Known Issues / Bugs
+- can't separate Card and Board components because it requires a movement variable to track what card is actually being dragged into the specific zone. Possible fix: Implementing top level state to track this.
+
+### Getting Started
 
 First, run the development server:
 
@@ -11,20 +33,3 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
