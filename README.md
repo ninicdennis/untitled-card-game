@@ -22,6 +22,8 @@ The eventual goal once this POC is completed is to have a website built within t
 ## Known Issues / Bugs
 - can't separate Card and Board components because it requires a movement variable to track what card is actually being dragged into the specific zone. Possible fix: Implementing top level state to track this.
 
+SOLUTION:  monitor.getItem() within the drop container actually holds the type value, but you must manually put this in yourself. No more random variables!
+
 ### Getting Started
 
 First, run the development server:

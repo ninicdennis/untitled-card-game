@@ -1,4 +1,6 @@
- const GameParam = {
+import { INVALID_MOVE } from 'boardgame.io/core';
+
+const GameParam = {
   setup: () => ({
     [0]: {
       deck: [{name: 'test', value: 1, id: 0},{name: 'tester', value: 1, id: 1},{name: 'testing', value: 1, id: 2}],
@@ -11,6 +13,7 @@
       board: [null,null,null,null,null,]
     }
   }),
+  // Turns have to be created, cant find a solution to automate an entire player stage. 
   // turn: {
   //   stages: {
   //     draw: {
