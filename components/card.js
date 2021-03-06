@@ -8,7 +8,7 @@ const ItemTypes = {
   CARD: 'card'
 }
 
-const Card = ({c, handPos, cp, ctx}) => {
+const Card = ({c, handPos, cp, ctx}) => { 
   const [{isDragging}, drag] = useDrag(() => ({
     item: {
       type: ItemTypes.CARD,
@@ -18,14 +18,14 @@ const Card = ({c, handPos, cp, ctx}) => {
       isDragging: !!monitor.isDragging(),
     }),
   }), [])
-  // Not required anymore since I made the connection from drag to drop :)
-  // isDragging ? cardInMovement = {c, handPos} : cardInMovement = {}
+  
   return (
     <div
     ref={cp == ctx.currentPlayer ? drag : null}
     style={{
       cursor: 'move',
     }}>
+
       <div style = {{width: 200, height: 300, backgroundColor: '#424242', margin: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
         <div style = {{display: 'flex', justifyContent: 'space-between', width: '90%'}}>
           <div style = {{margin: 0, color: '#fff'}}>{c.name} </div>
@@ -34,6 +34,9 @@ const Card = ({c, handPos, cp, ctx}) => {
              {c.value}
          </div>
         </div>
+        {/* {parseInt(cp) && console.log(c, handPos)} */}
+        {/* {console.log(c)} */}
+        {handPos}
         <div style = {{display: 'flex', justifyContent: 'space-between', width: '90%'}}>
           <div style = {{margin: 0, color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Icon icon = {swordIcon} />

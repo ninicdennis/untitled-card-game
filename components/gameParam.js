@@ -1,4 +1,4 @@
-import { INVALID_MOVE } from 'boardgame.io/core';
+import { INVALID_MOVE, TurnOrder } from 'boardgame.io/core';
 
 const drawCard = (G, ctx) => {
   console.log('player: ', ctx.currentPlayer)
@@ -15,12 +15,11 @@ const drawCard = (G, ctx) => {
 }
 
 const summonCard = (G, ctx, card, position) => {
-  console.log(G[ctx.currentPlayer].perTurnMana)
   if(G[ctx.currentPlayer].perTurnMana < card.c.value) {
     return INVALID_MOVE
   } else {
     console.log('Summoning: ', card, position)
-    G[ctx.currentPlayer].perTurnMana -= 1
+    G[ctx.currentPlayer].perTurnMana -= card.c.value
     G[ctx.currentPlayer].hand.splice(card.handPos, 1);
     G[ctx.currentPlayer].board[position] = card.c;
   }
@@ -45,6 +44,43 @@ const removeHp = (G, ctx, amount) => {
   // Or so I think. I don't know YET.
 }
 
+const unTap = (G, ctx) => {
+  G[ctx.currentPlayer].board.map((c, i) => {
+    console.log(c)
+    if(c !== null) {
+      G[ctx.currentPlayer].board[i].tapped = false;
+    }
+  })
+}
+
+const confirmAttack = (G, ctx, cardSelected, position) => {
+  console.log('This card: ', cardSelected, 'Position: ', position);
+  const otherPosition = ctx.currentPlayer === '0' ? '1' : '0';
+  if (G[otherPosition].board[position] !== null) {
+    const attacker = G[ctx.currentPlayer].board[position];
+    const defender = G[otherPosition].board[position];
+    console.log('Attacking: ', attacker.name, 'Defender: ' , defender.name) // NOTE, this will show you Proxy {<target>, {handler}}, but you can still adjust values from here.
+    // card v card!
+    if(attacker.atk - defender.def <= 0 && attacker.def - defender.atk <= 0) {
+      console.log('both dies.')
+    } else if (attacker.attack - defender.def <= 0 && attacker.def - defender.atk > 0 ) {
+      console.log('Defender dies, attacker lives.')
+    } else if (attacker.attack - defender.def > 0 && attacker.def - defender.atk <= 0) {
+      console.log('Attacker dies, defender lives.')
+    } else if (attacker.attack - defender.def > 0 && attacker.def - defender.atk > 0 ) {
+      console.log('No one dies!')
+    }
+    attacker.tapped = true;
+  } else {
+    const attacker = G[ctx.currentPlayer].board[position];
+    console.log('Attacking: ', attacker.name, 'Directly!')
+    // Should be pretty easy, just subtract.
+    G[otherPosition].hp -= attacker.atk; 
+    attacker.tapped = true;
+  }
+}
+
+
 const cardSet = [
   {
     id: 0,                // Id for card.
@@ -52,30 +88,34 @@ const cardSet = [
     value: 1,             // Mana value for summon.
     atk: 1,               // Cards attack value.
     def: 1,               // Cards defense value.
+    tapped: false,        // A card that has attacked already. 
     effect: 'Nothing.'    // Effects (WIP, probably will be object).
   },
   {
     id: 1,
     name: 'Another card?',
     value: 2,
-    atk: 1,
+    atk: 2,
     def: 1,
+    tapped: false,
     effect: 'Nothing.'
   },
   {
     id: 1,
-    name: 'Another card?',
+    name: 'Wow a third card!',
     value: 2,
     atk: 1,
-    def: 1,
+    def: 2,
+    tapped: false,
     effect: 'Nothing.'
   }
 ]
 const GameParam = {
-  setup: () => ({
+  setup: () => (
+    {
     [0]: {
       hp: 20,
-      mana: 0, // Max 10,
+      mana: 2, // Max 10,
       perTurnMana: 0,
       deck: cardSet,
       hand: [],
@@ -89,18 +129,23 @@ const GameParam = {
       hand: [],
       board: [null,null,null,null,null,]
     }
-  }),
+  }
+  ),
   turn: { // Stages must be set thru a useEffect checking who the active player is. A stipulation since phases get removed after they end.
+    order: TurnOrder.DEFAULT,
+    onBegin: (G, ctx) => {
+      ctx.events.setActivePlayers({currentPlayer: 'draw'}) // Fixes reset bug where the activeplayer stage doesn't work with the reset key.
+    },
     stages: {
       draw: {
-        moves: {drawCard, addMana},
+        moves: {drawCard, addMana, unTap}, // Pass desired moves here .
         next: 'upkeep' // Next effect moves on to the next described one . 
       },
       upkeep: {
         moves: {summonCard, addHp, removeHp}
       },
       battle: {
-        moves: {addHp, removeHp}
+        moves: {addHp, removeHp, confirmAttack}
       },
       downkeep : {
         moves: {summonCard, addHp, removeHp}
@@ -109,14 +154,8 @@ const GameParam = {
         moves: {}
       }
     }
-  }
-  // moves : {
-  //   drawCard,
-  //   summonCard,
-  //   addMana,
-  //   addHp,
-  //   removeHp,
-  // }
+  },
+  disableUndo: true,
 }
 
 export default GameParam

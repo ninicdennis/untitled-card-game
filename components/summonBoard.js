@@ -9,11 +9,12 @@ const SummonBoard = ({x,y,children, position, moves, playerType,ctx, cp}) => {
     accept: ItemTypes.CARD,
     drop: (item, monitor) =>{ 
       let card = monitor.getItem().data
+      console.log(card.c, item)
       console.log(`Moved card: ${card.c.name} into position: ${position}`)
       console.log('Whos field: ', playerType,'Current: ', playerAction)
       // Costs and calculation would happen here.
       moves.summonCard(card, position)
-      return item
+      // return item
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),

@@ -4,6 +4,7 @@ import GameParam from '../components/gameParam'
 import Card from '../components/card'
 import SummonBoard from '../components/summonBoard'
 import CardInPlay from '../components/cardInPlay'
+import Head from 'next/head'
 const Board = (props) => {
   const p = parseInt(props.ctx.currentPlayer)
   const playerStage = props.ctx.activePlayers
@@ -13,14 +14,10 @@ const Board = (props) => {
     if(currentPlayer == playerDeck) {
       props.moves.drawCard();
       props.moves.addMana();
+      props.moves.unTap();
       props.events.setActivePlayers({currentPlayer: 'upkeep'})
     }
   }
-
-  useEffect(() => {
-    props.events.setActivePlayers({currentPlayer: 'draw'})
-      // console.log(props.ctx.activePlayers)
-  }, [props.ctx.currentPlayer])
   
   const setStage = (e, currentStage) => {
     e.preventDefault();
@@ -37,14 +34,20 @@ const Board = (props) => {
     }
   }
 
+  const confirmAttack = (e, cardSelected, position, player) => {
+    e.preventDefault();
+    // Checking to make sure the correct player is pressing their own card, instead of the other way around.
+    // Also checking if current card is tapped.
+    if (player === parseInt(props.ctx.currentPlayer) && !cardSelected.tapped) return props.moves.confirmAttack(cardSelected, position);
+    else return null;
+  }
+
   return (
     <div>
-      {/* I probably could've just made this into one button, but i'm stupid so this is staying.  */}
-      {playerStage && playerStage[p] === 'upkeep' && <button onClick = {e => {setStage(e,playerStage[p])}}>Enter Battle Step</button>}
-      {playerStage && playerStage[p] === 'battle' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter Downkeep</button>}
-      {playerStage && playerStage[p] === 'downkeep' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter EndPhase</button>}
-      {props.ctx.activePlayers && props.ctx.activePlayers[p]}
-
+      <Head>
+        <title>Untitled Card Game</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {/* {props.ctx.activePlayers ? props.ctx.activePlayers : 'null'} */}
        {/* Deck Draw */}
        {/* Player 1 deck */}
@@ -78,7 +81,7 @@ const Board = (props) => {
                           key = {i}  position = {i} moves = {props.moves}  
                           playerType = {0}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}/>
           } else {
-            return <CardInPlay  key = {i} c = {props.G[0].board[i]} />
+            return <CardInPlay  key = {i} position = {i} c = {props.G[0].board[i]} confirmAttack = {confirmAttack} player = {0}/>
           }
         })
       }
@@ -86,6 +89,13 @@ const Board = (props) => {
       {/* Might find a way to fix this split for each board, I think this looks stupid. */}
       {/* REMINDER: You have to define the specific players number in these sections in order for it to work. */}
       {/* ======================================================================================================================================================= */}
+      {/* I probably could've just made this into one button, but i'm stupid so this is staying.  */}
+      <div style = {{display: 'flex', justifyContent: 'center', width: '100%'}}>
+        {playerStage && playerStage[p] === 'upkeep' && <button onClick = {e => {setStage(e,playerStage[p])}}>Enter Battle Step</button>}
+        {playerStage && playerStage[p] === 'battle' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter Downkeep</button>}
+        {playerStage && playerStage[p] === 'downkeep' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter EndPhase</button>}
+        {props.ctx.activePlayers && <div>Current Stage: {props.ctx.activePlayers[p]}</div>}
+      </div>
      {/* Board Render */}
       {/* Player 2 board */}
       <div style = {{display: 'flex'}}>
@@ -95,7 +105,7 @@ const Board = (props) => {
                           key = {i} position = {i} moves = {props.moves} 
                           playerType = {1}  ctx = {props.ctx} cp = {props.ctx.currentPlayer}/>
           } else {
-            return <CardInPlay  key = {i} c = {props.G[1].board[i]} />
+            return <CardInPlay  key = {i}  position = {i} c = {props.G[1].board[i]} confirmAttack = {confirmAttack} player = {1}/>
           }
         })
       }
