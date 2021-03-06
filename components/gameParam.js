@@ -44,13 +44,40 @@ const removeHp = (G, ctx, amount) => {
   // Win condition should sit here, this should be the final step after calculation to determine who won.
   // Or so I think. I don't know YET.
 }
+
+const cardSet = [
+  {
+    id: 0,                // Id for card.
+    name: 'Default Card', // Display Name.
+    value: 1,             // Mana value for summon.
+    atk: 1,               // Cards attack value.
+    def: 1,               // Cards defense value.
+    effect: 'Nothing.'    // Effects (WIP, probably will be object).
+  },
+  {
+    id: 1,
+    name: 'Another card?',
+    value: 2,
+    atk: 1,
+    def: 1,
+    effect: 'Nothing.'
+  },
+  {
+    id: 1,
+    name: 'Another card?',
+    value: 2,
+    atk: 1,
+    def: 1,
+    effect: 'Nothing.'
+  }
+]
 const GameParam = {
   setup: () => ({
     [0]: {
       hp: 20,
       mana: 0, // Max 10,
       perTurnMana: 0,
-      deck: [{name: 'test', value: 1, id: 0},{name: 'tester', value: 1, id: 1},{name: 'testing', value: 1, id: 2}],
+      deck: cardSet,
       hand: [],
       board: [null,null,null,null,null,]
     },
@@ -58,7 +85,7 @@ const GameParam = {
       hp: 20,
       mana: 0,
       perTurnMana: 0,
-      deck: [{name: 'test', value: 1, id: 0},{name: 'tester', value: 1, id: 1},{name: 'testing', value: 1, id: 2}],
+      deck: cardSet,
       hand: [],
       board: [null,null,null,null,null,]
     }
