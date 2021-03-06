@@ -2,6 +2,7 @@ import {useDrag} from 'react-dnd'
 import {Icon} from '@iconify/react';
 import swordIcon from '../node_modules/@iconify-icons/mdi/sword'
 import shieldIcon from '../node_modules/@iconify-icons/mdi/shield'
+import hexagon from '../node_modules/@iconify-icons/mdi/hexagon-slice-3'
 
 const ItemTypes = {
   CARD: 'card'
@@ -27,8 +28,11 @@ const Card = ({c, handPos, cp, ctx}) => {
     }}>
       <div style = {{width: 200, height: 300, backgroundColor: '#424242', margin: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}>
         <div style = {{display: 'flex', justifyContent: 'space-between', width: '90%'}}>
-          <div style = {{margin: 0, color: '#fff'}}> {c.name} </div>
-          <div style = {{margin: 0, color: '#fff'}}> {c.value} </div>
+          <div style = {{margin: 0, color: '#fff'}}>{c.name} </div>
+          <div style = {{margin: 0, color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Icon icon = {hexagon} />
+             {c.value}
+         </div>
         </div>
         <div style = {{display: 'flex', justifyContent: 'space-between', width: '90%'}}>
           <div style = {{margin: 0, color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
