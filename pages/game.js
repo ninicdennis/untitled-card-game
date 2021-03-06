@@ -32,6 +32,10 @@ const Board = (props) => {
         })}
       </div>
       </div>
+      <div>
+       <p>Mana: {props.G[0].mana}</p> 
+       <p>HP: {props.G[0].hp}</p> 
+      </div>
       {/* Board Render */}
       {/* Player 1 board */}
       <div style = {{display: 'flex'}}>
@@ -62,6 +66,10 @@ const Board = (props) => {
           }
         })
       }
+      </div>
+      <div>
+       <p>Mana: {props.G[1].mana}</p> 
+       <p>HP: {props.G[1].hp}</p> 
       </div>
        {/* Deck Draw */}
        {/* Player 2 deck */}

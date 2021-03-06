@@ -3,11 +3,15 @@ import { INVALID_MOVE } from 'boardgame.io/core';
 const GameParam = {
   setup: () => ({
     [0]: {
+      hp: 20,
+      mana: 1,
       deck: [{name: 'test', value: 1, id: 0},{name: 'tester', value: 1, id: 1},{name: 'testing', value: 1, id: 2}],
       hand: [],
       board: [null,null,null,null,null,]
     },
     [1]: {
+      hp: 20,
+      mana: 1,
       deck: [{name: 'test', value: 1, id: 0},{name: 'tester', value: 1, id: 1},{name: 'testing', value: 1, id: 2}],
       hand: [],
       board: [null,null,null,null,null,]
@@ -49,10 +53,33 @@ const GameParam = {
       }
     },
     summonCard: (G, ctx, card, position) => {
+      console.log(G[ctx.currentPlayer].mana)
+      if(G[ctx.currentPlayer].mana < card.c.value) {
+        return INVALID_MOVE
+      } else {
         console.log('Summoning: ', card, position)
+        G[ctx.currentPlayer].mana -= 1
         G[ctx.currentPlayer].hand.splice(card.handPos, 1);
         G[ctx.currentPlayer].board[position] = card.c;
-    }
+      }
+
+    },
+    addMana: (G, ctx) => {
+      G[ctx.currentPlayer].mana + 1 <= 10 ? G[ctx.currentPlayer].mana += 1 : null;
+    },
+    addHp: (G, ctx, amount) => {
+      if (amount === null || amount === undefined || typeof amount != 'number' || amount.length === 0) {
+        return INVALID_MOVE
+      } else G[ctx.currentPlayer].hp += amount;
+    },
+    removeHp: (G, ctx, amount) => {
+      if (amount === null || amount === undefined || typeof amount != 'number' || amount.length === 0) {
+        return INVALID_MOVE
+      } else G[ctx.currentPlayer].hp -= amount;
+      // Win condition should sit here, this should be the final step after calculation to determine who won.
+      // Or so I think. I don't know YET.
+
+    },
   }
 }
 

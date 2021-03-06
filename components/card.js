@@ -13,9 +13,6 @@ const Card = ({c, handPos, cp, ctx}) => {
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
-    end: (item, monitor) => {
-      console.log(item, monitor)
-    },
   }), [])
   // Not required anymore since I made the connection from drag to drop :)
   // isDragging ? cardInMovement = {c, handPos} : cardInMovement = {}
