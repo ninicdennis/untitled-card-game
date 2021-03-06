@@ -30,11 +30,13 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
 - [x] Basic board layout created with drag events to specific positions
 - [x] Player "Mana Pool" 
    - [x] Mana adding function
-   - [ ] Mana automatically adding on turn functionality
+   - [x] Mana automatically adding on turn functionality
    - [x] Mana removal on card summon (Based on card cost)
+   - [x] Mana per turn + usable mana, regenerates and keeps track of how much mana you have. 
 - [ ] Turn Phasing and order
-   - [ ] Draw Step - Drawing a card automatically on start of turn + 1 mana
-   - [ ] Upkeep Step - Card summons, drag spells, etc. 
+   - [x] Phasing logic setup
+   - [x] Draw Step - Drawing a card automatically on start of turn + 1 mana
+   - [x] Upkeep Step - Card summons, drag spells, etc. 
    - [ ] Battle Step - Selected cards attack forward to adjacent cards for block, if not attack directly.
    - [ ] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
    - [ ] Endphase Step - Finishing, pass to other player.
@@ -50,6 +52,8 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [ ] Spell cards: cards you do not summon, but instead trigger
 - [ ] End Game Screen (You Win/Lose!)
 - [ ] Database hookups, websockets for multiplayer, grabbing user data.
+
+- [ ] Design (This ones all the way down here because I'm not the best at it!)
 
 ## Future List: Website
 - [ ] Website to register / sign up
