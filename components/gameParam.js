@@ -15,8 +15,8 @@ const drawCard = (G, ctx) => {
 }
 
 const summonCard = (G, ctx, card, position) => {
-  console.log(G[ctx.currentPlayer].mana)
-  if(G[ctx.currentPlayer].mana < card.c.value) {
+  console.log(G[ctx.currentPlayer].perTurnMana)
+  if(G[ctx.currentPlayer].perTurnMana < card.c.value) {
     return INVALID_MOVE
   } else {
     console.log('Summoning: ', card, position)
