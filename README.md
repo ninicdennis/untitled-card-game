@@ -4,16 +4,59 @@ This is a card game I am creating from scratch using boardgame.io and Next.js. T
 
 The concept is similar to Hearthstone, as I feel that genre needs some more web love. So I will be attempting a decent recreation, but not nearly as polished, of course. (Who knows, maybe in the future I will get this actually completed.)
 
+## Phases
+
+The card game will be broken down into 5 phases, with hopefully more that can be added easily. They go as follows:
+
+_Draw Step_ - Draw a card, gain a mana, move on to next phase.
+
+_Upkeep Step_ - This is where you would make your plays, consisting of summoning, using spells, etc.
+
+_Battle Step_ - Where you decide which one of your monsters you would like to attack, and which you want to stay.
+
+_Offkeep Step_ - Similar to Upkeep, this is after everything has happened, when you want to use any remaining spells or abilities.
+
+_End Step_ - This is when the turn is over and gets passed to the other player.
+
+After each End Step, the chart begins at step 1, and repeats until a victor is decided.
+
 ## TODO
-- [x] Initial Card Setup
+- [x] Initial Card System Setup
+- [x] Card Creation
+   - [x] Basic card layout with name value and id
+   - [ ] More "fluff" - description, image, etc.
+   - [ ] Effect: keyword effect pool.
+   - [ ] Hp and Def: how much they attack and defend.
 - [x] Basic board layout created with drag events to specific positions
-- [ ] Player "Mana Pool" 
+- [x] Player "Mana Pool" 
+   - [x] Mana adding function
+   - [ ] Mana automatically adding on turn functionality
+   - [x] Mana removal on card summon (Based on card cost)
 - [ ] Turn Phasing and order
-- [ ] Player HP tracking
-- [ ] Basic Card Attacks and defending
+   - [ ] Draw Step - Drawing a card automatically on start of turn + 1 mana
+   - [ ] Upkeep Step - Card summons, drag spells, etc. 
+   - [ ] Battle Step - Selected cards attack forward to adjacent cards for block, if not attack directly.
+   - [ ] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
+   - [ ] Endphase Step - Finishing, pass to other player.
+- [x] Player HP tracking
+   - [x] Hitpoint adding and subtracting functions
+   - [ ] On damage step calculations
+- [ ] Card attacking
+   - [ ] Picking each card on this specific stage.
+   - [ ] Function to check if there is an adjacent card in front to defend.
+   - [ ] Attack step per card to do damage.
+   - [ ] Possible effects for damage? (Might come later during design phases)
 - [ ] "Spells" and different card types
-- [ ] End Game Screen
-- [ ] Database hookups
+   - [ ] Spell cards: cards you do not summon, but instead trigger
+- [ ] End Game Screen (You Win/Lose!)
+- [ ] Database hookups, websockets for multiplayer, grabbing user data.
+
+## Future List: Website
+- [ ] Website to register / sign up
+- [ ] Screen to queue for a game with another player
+- [ ] Deck editor
+- [ ] Card Pack system (Free of course, who charges money? )
+- [ ] Points earning system for participating, in order to gain points
 
 ## Other Plans / Ideas
 
@@ -25,8 +68,11 @@ The eventual goal once this POC is completed is to have a website built within t
 SOLUTION:  monitor.getItem() within the drop container actually holds the type value, but you must manually put this in yourself. No more random variables!
 
 ### Getting Started
+Install the packages: 
 
-First, run the development server:
+``` npm i ```
+
+Then, un the development server: 
 
 ```bash
 npm run dev
