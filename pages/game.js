@@ -5,14 +5,47 @@ import Card from '../components/card'
 import SummonBoard from '../components/summonBoard'
 import CardInPlay from '../components/cardInPlay'
 const Board = (props) => {
+  const p = parseInt(props.ctx.currentPlayer)
+  const playerStage = props.ctx.activePlayers
 
   const handleDeckDraw = (e, currentPlayer, playerDeck) => {
     e.preventDefault();
-    if(currentPlayer == playerDeck) return props.moves.drawCard();
+    if(currentPlayer == playerDeck) {
+      props.moves.drawCard();
+      props.moves.addMana();
+      props.events.setActivePlayers({currentPlayer: 'upkeep'})
+    }
+  }
+
+  useEffect(() => {
+    props.events.setActivePlayers({currentPlayer: 'draw'})
+      // console.log(props.ctx.activePlayers)
+  }, [props.ctx.currentPlayer])
+  
+  const setStage = (e, currentStage) => {
+    e.preventDefault();
+    console.log('Stage swap: ', currentStage)
+    switch (currentStage) {
+      case 'upkeep': 
+        return props.events.setActivePlayers({currentPlayer: 'battle'});
+      case 'battle':
+        return props.events.setActivePlayers({currentPlayer: 'downkeep'});
+      case 'downkeep':
+        return props.events.endTurn(); 
+      default:
+        return null;
+    }
   }
 
   return (
     <div>
+      {/* I probably could've just made this into one button, but i'm stupid so this is staying.  */}
+      {playerStage && playerStage[p] === 'upkeep' && <button onClick = {e => {setStage(e,playerStage[p])}}>Enter Battle Step</button>}
+      {playerStage && playerStage[p] === 'battle' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter Downkeep</button>}
+      {playerStage && playerStage[p] === 'downkeep' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter EndPhase</button>}
+      {props.ctx.activePlayers && props.ctx.activePlayers[p]}
+
+      {/* {props.ctx.activePlayers ? props.ctx.activePlayers : 'null'} */}
        {/* Deck Draw */}
        {/* Player 1 deck */}
        <div style = {{display: 'flex', justifyContent: 'left'}}>
@@ -33,7 +66,7 @@ const Board = (props) => {
       </div>
       </div>
       <div>
-       <p>Mana: {props.G[0].mana}</p> 
+       <p>Mana: {props.G[0].perTurnMana}/{props.G[0].mana}</p> 
        <p>HP: {props.G[0].hp}</p> 
       </div>
       {/* Board Render */}
@@ -68,7 +101,7 @@ const Board = (props) => {
       }
       </div>
       <div>
-       <p>Mana: {props.G[1].mana}</p> 
+      <p>Mana: {props.G[1].perTurnMana}/{props.G[1].mana}</p> 
        <p>HP: {props.G[1].hp}</p> 
       </div>
        {/* Deck Draw */}
@@ -90,7 +123,6 @@ const Board = (props) => {
         })}
       </div>
       </div>
- 
     </div>
   )
 }
