@@ -26,7 +26,7 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [x] Basic card layout with name value and id
    - [ ] More "fluff" - description, image, etc.
    - [ ] Effect: keyword effect pool.
-   - [ ] Hp and Def: how much they attack and defend.
+   - [x] Hp and Def: how much they attack and defend.
 - [x] Basic board layout created with drag events to specific positions
 - [x] Player "Mana Pool" 
    - [x] Mana adding function
@@ -44,8 +44,8 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [x] Hitpoint adding and subtracting functions
    - [ ] On damage step calculations
 - [ ] Card attacking
-   - [ ] Picking each card on this specific stage.
-   - [ ] Function to check if there is an adjacent card in front to defend.
+   - [x] Picking each card on this specific stage.
+   - [x] Function to check if there is an adjacent card in front to defend.
    - [ ] Attack step per card to do damage.
    - [ ] Possible effects for damage? (Might come later during design phases)
 - [ ] "Spells" and different card types
@@ -60,17 +60,18 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
 - [ ] Screen to queue for a game with another player
 - [ ] Deck editor
 - [ ] Card Pack system (Free of course, who charges money? )
-- [ ] Points earning system for participating, in order to gain points
+- [ ] Points earning system for participating, in order to gain points for playing!
 
 ## Other Plans / Ideas
 
 The eventual goal once this POC is completed is to have a website built within this website in order to handle all the user player base things such as creating decks, and have it all contained within this single application. Multiplayer will also be handled within boardgame.io, with the eventual goal being a fully playable card game within the web. Designs and such will come later, as I am not a designer at all, so everything will look pretty ugly for a while!
 
 ## Known Issues / Bugs
-- can't separate Card and Board components because it requires a movement variable to track what card is actually being dragged into the specific zone. Possible fix: Implementing top level state to track this.
+- Can't separate Card and Board components because it requires a movement variable to track what card is actually being dragged into the specific zone. Possible fix: Implementing top level state to track this.
 
 SOLUTION:  monitor.getItem() within the drop container actually holds the type value, but you must manually put this in yourself. No more random variables!
 
+- Card summoning has a bug currently where if you have 3 cards, see [here](https://github.com/react-dnd/react-dnd/issues/3123) for a bigger explination.
 ### Getting Started
 Install the packages: 
 
