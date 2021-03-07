@@ -1,10 +1,12 @@
 import {Client} from 'boardgame.io/react'
 import {useState, useEffect} from 'react'
+
 import GameParam from '../components/gameParam'
 import Card from '../components/card'
 import SummonBoard from '../components/summonBoard'
 import CardInPlay from '../components/cardInPlay'
 import Head from 'next/head'
+
 const Board = (props) => {
   const p = parseInt(props.ctx.currentPlayer)
   const playerStage = props.ctx.activePlayers
@@ -79,7 +81,8 @@ const Board = (props) => {
           if (board == null) {
             return <SummonBoard 
                           key = {i}  position = {i} moves = {props.moves}  
-                          playerType = {0}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}/>
+                          playerType = {0}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}
+                          />
           } else {
             return <CardInPlay  key = {i} position = {i} c = {props.G[0].board[i]} confirmAttack = {confirmAttack} player = {0}/>
           }
@@ -103,7 +106,8 @@ const Board = (props) => {
           if (board == null) {
             return <SummonBoard  
                           key = {i} position = {i} moves = {props.moves} 
-                          playerType = {1}  ctx = {props.ctx} cp = {props.ctx.currentPlayer}/>
+                          playerType = {1}  ctx = {props.ctx} cp = {props.ctx.currentPlayer}
+                          />
           } else {
             return <CardInPlay  key = {i}  position = {i} c = {props.G[1].board[i]} confirmAttack = {confirmAttack} player = {1}/>
           }
