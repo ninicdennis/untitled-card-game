@@ -36,7 +36,6 @@ const Card = ({c, handPos, cp, ctx}) => {
         </div>
         {/* {parseInt(cp) && console.log(c, handPos)} */}
         {/* {console.log(c)} */}
-        {handPos}
         <div style = {{display: 'flex', justifyContent: 'space-between', width: '90%'}}>
           <div style = {{margin: 0, color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Icon icon = {swordIcon} />

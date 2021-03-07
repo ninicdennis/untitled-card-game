@@ -82,7 +82,7 @@ const Board = (props) => {
             return <SummonBoard 
                           key = {i}  position = {i} moves = {props.moves}  
                           playerType = {0}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}
-                          />
+                          hand = {props.G[props.ctx.currentPlayer].hand}/>
           } else {
             return <CardInPlay  key = {i} position = {i} c = {props.G[0].board[i]} confirmAttack = {confirmAttack} player = {0}/>
           }
@@ -104,10 +104,10 @@ const Board = (props) => {
       <div style = {{display: 'flex'}}>
         {props.G[1].board.map((board, i) => {
           if (board == null) {
-            return <SummonBoard  
+            return <SummonBoard
                           key = {i} position = {i} moves = {props.moves} 
                           playerType = {1}  ctx = {props.ctx} cp = {props.ctx.currentPlayer}
-                          />
+                          hand = {props.G[props.ctx.currentPlayer].hand}/>
           } else {
             return <CardInPlay  key = {i}  position = {i} c = {props.G[1].board[i]} confirmAttack = {confirmAttack} player = {1}/>
           }

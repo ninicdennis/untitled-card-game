@@ -7,7 +7,7 @@ const ItemTypes = {
 }
 
 
-const SummonBoard = ({x,y,children, position, moves, playerType,ctx, cp,}) => {
+const SummonBoard = ({x,y,children, position, moves, playerType,ctx, cp, hand}) => {
   function useStableCallback(callback) {
     const callbackRef = useRef(callback);
     callbackRef.current = callback;
@@ -20,12 +20,9 @@ const SummonBoard = ({x,y,children, position, moves, playerType,ctx, cp,}) => {
   
   let playerAction = parseInt(ctx.currentPlayer)
   const dropCb = useStableCallback((item, monitor) => {
-    console.log(item)
-    let card = monitor.getItem().data
-    console.log(card.c, item)
-    console.log(`Moved card: ${card.c.name} into position: ${position}`)
-    console.log('Whos field: ', playerType,'Current: ', playerAction)
-    moves.summonCard(card, position)
+    const card = hand[item.data.handPos]
+    console.log(`Moved card: ${card.name} into position: ${position}`)
+    moves.summonCard({c:card, handPos: item.data.handPos}, position)
   });
 
   const [{isOver}, drop] = useDrop(() => ({
