@@ -44,17 +44,29 @@ const Board = (props) => {
     else return null;
   }
 
+  const graveCheck = (e, player) => {
+    e.preventDefault();
+    props.G[player].grave.map(g => {
+      console.log('Card: ', g)
+    })
+  }
+
   return (
     <div>
       <Head>
         <title>Untitled Card Game</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* {props.ctx.activePlayers ? props.ctx.activePlayers : 'null'} */}
        {/* Deck Draw */}
        {/* Player 1 deck */}
        <div style = {{display: 'flex', justifyContent: 'left'}}>
        <div style = {{display: 'flex', justifyContent: 'left'}}>
+      {/* Player 1 Graveyard */}
+      {/* For now this is a placeholder, onclick event to show the entire graveyard would be great to add. */}
+      <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
+      onClick = {e => graveCheck(e, 0)}>
+          Graveyard: {props.G[0].grave.length}
+      </div>
           <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
            onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer,0)}>
             Deck: {props.G[0].deck.length}
@@ -122,6 +134,12 @@ const Board = (props) => {
        {/* Player 2 deck */}
        <div style = {{display: 'flex', justifyContent: 'left'}}>
        <div style = {{display: 'flex', justifyContent: 'left'}}>
+        {/* Player 1 Graveyard */}
+        {/* For now this is a placeholder, onclick event to show the entire graveyard would be great to add. */}
+        <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
+        onClick = {e => graveCheck(e, 1)}>
+            Graveyard: {props.G[1].grave.length}
+        </div>
           <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}} 
           onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer,1)}>
             Deck: {props.G[1].deck.length}

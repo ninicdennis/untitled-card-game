@@ -46,9 +46,9 @@ const removeHp = (G, ctx, amount) => {
 
 const unTap = (G, ctx) => {
   G[ctx.currentPlayer].board.map((c, i) => {
-    console.log(c)
     if(c !== null) {
       G[ctx.currentPlayer].board[i].tapped = false;
+      G[ctx.currentPlayer].board[i].def = G[ctx.currentPlayer].board[i].defaultDef;
     }
   })
 }
@@ -61,14 +61,33 @@ const confirmAttack = (G, ctx, cardSelected, position) => {
     const defender = G[otherPosition].board[position];
     console.log('Attacking: ', attacker.name, 'Defender: ' , defender.name) // NOTE, this will show you Proxy {<target>, {handler}}, but you can still adjust values from here.
     // card v card!
-    if(attacker.atk - defender.def <= 0 && attacker.def - defender.atk <= 0) {
-      console.log('both dies.')
-    } else if (attacker.attack - defender.def <= 0 && attacker.def - defender.atk > 0 ) {
+    const attackSub = defender.def - attacker.atk; // attacker - defender hp 
+    const defenderSub = attacker.def - defender.atk; // defender - attacker hp
+    console.log('ATK: ', attackSub, 'Def: ', defenderSub)
+    if(attackSub <= 0 && defenderSub <= 0) {
+      console.log('both die!')
+      const atkCardToGrave = G[ctx.currentPlayer].board[position];
+      const defCardToGrave = G[otherPosition].board[position];
+      G[ctx.currentPlayer].board[position] = null;
+      G[otherPosition].board[position] = null;
+      G[ctx.currentPlayer].grave.push(atkCardToGrave);
+      G[otherPosition].grave.push(defCardToGrave);
+    } else if (attackSub <= 0 && defenderSub > 0 ) {
       console.log('Defender dies, attacker lives.')
-    } else if (attacker.attack - defender.def > 0 && attacker.def - defender.atk <= 0) {
+      const defCardToGrave = G[otherPosition].board[position];
+      G[otherPosition].board[position] = null;
+      G[otherPosition].grave.push(defCardToGrave);
+      G[ctx.currentPlayer].board[position].def = defenderSub; // Resets after untap
+    } else if (attackSub > 0 && defenderSub <= 0) {
       console.log('Attacker dies, defender lives.')
-    } else if (attacker.attack - defender.def > 0 && attacker.def - defender.atk > 0 ) {
+      const atkCardToGrave = G[ctx.currentPlayer].board[position];
+      G[ctx.currentPlayer].board[position] = null;
+      G[ctx.currentPlayer].grave.push(atkCardToGrave);
+      G[otherPosition].board[position].def = attackSub; // resets after untap
+    } else if (attackSub > 0 && defenderSub > 0 ) {
       console.log('No one dies!')
+      G[ctx.currentPlayer].board[position].def = defenderSub; // Resets after untap
+      G[otherPosition].board[position].def = attackSub; // resets after untap
     }
     attacker.tapped = true;
   } else {
@@ -88,6 +107,8 @@ const cardSet = [
     value: 1,             // Mana value for summon.
     atk: 1,               // Cards attack value.
     def: 1,               // Cards defense value.
+    defaultAtk: 1,        // Cards default akt value, restores after turn.
+    defaultDef: 1,        // Cards devault def value, restores after turn.
     tapped: false,        // A card that has attacked already. 
     effect: 'Nothing.'    // Effects (WIP, probably will be object).
   },
@@ -97,6 +118,8 @@ const cardSet = [
     value: 2,
     atk: 2,
     def: 1,
+    defaultAtk: 2,
+    defaultDef: 1,
     tapped: false,
     effect: 'Nothing.'
   },
@@ -106,6 +129,8 @@ const cardSet = [
     value: 2,
     atk: 1,
     def: 2,
+    defaultAtk: 1,
+    defaultDef: 2,
     tapped: false,
     effect: 'Nothing.'
   }
@@ -119,6 +144,7 @@ const GameParam = {
       perTurnMana: 0,
       deck: cardSet,
       hand: [],
+      grave: [],
       board: [null,null,null,null,null,]
     },
     [1]: {
@@ -127,6 +153,7 @@ const GameParam = {
       perTurnMana: 0,
       deck: cardSet,
       hand: [],
+      grave: [],
       board: [null,null,null,null,null,]
     }
   }
