@@ -23,34 +23,39 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
 ## TODO
 - [x] Initial Card System Setup
 - [x] Card Creation
-   - [x] Basic card layout with name value and id
+   - [x] Basic card layout with name value and id.
    - [ ] More "fluff" - description, image, etc.
    - [ ] Effect: keyword effect pool.
    - [x] Hp and Def: how much they attack and defend.
 - [x] Basic board layout created with drag events to specific positions
 - [x] Player "Mana Pool" 
-   - [x] Mana adding function
-   - [x] Mana automatically adding on turn functionality
-   - [x] Mana removal on card summon (Based on card cost)
+   - [x] Mana adding function.
+   - [x] Mana automatically adding on turn functionality.
+   - [x] Mana removal on card summon (Based on card cost).
    - [x] Mana per turn + usable mana, regenerates and keeps track of how much mana you have. 
 - [ ] Turn Phasing and order
-   - [x] Phasing logic setup
-   - [x] Draw Step - Drawing a card automatically on start of turn + 1 mana
+   - [x] Phasing logic setup.
+   - [x] Draw Step - Drawing a card automatically on start of turn + 1 mana.
    - [x] Upkeep Step - Card summons, drag spells, etc. 
-   - [ ] Battle Step - Selected cards attack forward to adjacent cards for block, if not attack directly.
+   - [x] Battle Step - Selected cards attack forward to adjacent cards for block, if not attack directly.
    - [ ] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
    - [ ] Endphase Step - Finishing, pass to other player.
 - [x] Player HP tracking
-   - [x] Hitpoint adding and subtracting functions
-   - [ ] On damage step calculations
+   - [x] Hitpoint adding and subtracting functions.
+   - [ ] On damage step calculations.
 - [ ] Card attacking
    - [x] Picking each card on this specific stage.
    - [x] Function to check if there is an adjacent card in front to defend.
    - [ ] Attack step per card to do damage.
-   - [ ] Possible effects for damage? (Might come later during design phases)
+   - [ ] Possible effects for damage? (Might come later during design phases).
+   - [x] Tapped attack card if survived step.
+- [ ] Graveyard
+   - [x] Initial layout and position.
+   - [ ] Modal view to show current cards in your graveyard.
+   - [ ] Card reset def on destruction so it looks better.
 - [ ] "Spells" and different card types
-   - [ ] Spell cards: cards you do not summon, but instead trigger
-- [ ] End Game Screen (You Win/Lose!)
+   - [ ] Spell cards: cards you do not summon, but instead trigger.
+- [ ] End Game Screen (You Win/Lose!).
 - [ ] Database hookups, websockets for multiplayer, grabbing user data.
 
 - [ ] Design (This ones all the way down here because I'm not the best at it!)
