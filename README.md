@@ -77,6 +77,11 @@ The eventual goal once this POC is completed is to have a website built within t
 SOLUTION:  monitor.getItem() within the drop container actually holds the type value, but you must manually put this in yourself. No more random variables!
 
 - Card summoning has a bug currently where if you have 3 cards, see [here](https://github.com/react-dnd/react-dnd/issues/3123) for a bigger explination.
+
+SOLUTION: Drag state only holds the initial state on render, but will change the card position. Just moved the entire hand prop over into that container, and then set the card based off hand position.
+
+- Firebase on the server side is very slow, and takes a long time to actually update state. Possibly due to being on the free plan? 
+
 ### Getting Started
 Install the packages: 
 
@@ -91,3 +96,11 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You will then want to add your firebase firestore admin credentials when creating the server. Head [here](https://firebase.google.com/docs/admin/setup#initialize-sdk) to learn how to get your credentials. After that, you can run the next command to open the socket port for both players.
+
+```bash
+npm run serve
+```
+
+This will open the socker port to start the game. 
