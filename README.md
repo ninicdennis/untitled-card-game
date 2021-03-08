@@ -56,7 +56,16 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
 - [ ] "Spells" and different card types
    - [ ] Spell cards: cards you do not summon, but instead trigger.
 - [ ] End Game Screen (You Win/Lose!).
+- [ ] Multiplayer
+   - [x] Initial socket reconnection in game client / state.
+   - [x] Integrate a database to handle state management (thanks firebase!)
+   - [x] Handle State management through firebase (Turns out, bgio-firebase handles this!)
+   - [ ] Speed improvements from firebase (Possibly by paying for it?)
+   - [ ] Storing game logs elsewhere for later use.
+   - [ ] Proper connection screen, deciding player 0/1.
+   - [ ] Handling websocket disconnect, loaders, etc.
 - [ ] Database hookups, websockets for multiplayer, grabbing user data.
+
 
 - [ ] Design (This ones all the way down here because I'm not the best at it!)
 
@@ -87,7 +96,7 @@ Install the packages:
 
 ``` npm i ```
 
-Then, un the development server: 
+Then, in the development server: 
 
 ```bash
 npm run dev
