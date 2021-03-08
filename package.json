@@ -19,7 +19,8 @@
     "react-dnd": "^13.0.0",
     "react-dnd-html5-backend": "^12.1.0",
     "react-dom": "17.0.1",
-    "react-draggable": "^4.4.3"
+    "react-draggable": "^4.4.3",
+    "react-modal": "^3.12.1"
   },
   "devDependencies": {
     "@iconify-icons/mdi": "^1.1.12",

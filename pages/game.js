@@ -30,8 +30,8 @@ const Game = Client({
   game: GameParam,
   numPlayers: 2,
   board: Board,
-  multiplayer: SocketIO({server: 'localhost:8000'}),
-  // multiplayer: Local()
+  // multiplayer: SocketIO({server: 'localhost:8000'}),
+  multiplayer: Local()
 })
 
 const GameScreen = (props) => {
@@ -45,7 +45,11 @@ const GameScreen = (props) => {
     )
   } else if (player === 0) {
     return (
+      <>
       <Game playerID = '0' />
+      {/* Uncomment if you want to use local, just adds the second screen there. */}
+      <Game playerID = '1' />
+      </>
     )
   } else if (player === 1) {
     return (

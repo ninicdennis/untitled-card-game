@@ -1,10 +1,11 @@
-
-
 import Card from './card'
 import SummonBoard from './summonBoard'
 import CardInPlay from './cardInPlay'
+import {useEffect, useState} from 'react'
+import GraveModal from './graveyardModal'
 
 const PlayerGameBoard = ({props}) => {
+  const [modal, setModal] = useState(false)
   const p = parseInt(props.ctx.currentPlayer)
   const playerStage = props.ctx.activePlayers
   const playerView = props.playerID
@@ -45,6 +46,7 @@ const PlayerGameBoard = ({props}) => {
 
   const graveCheck = (e, player) => {
     e.preventDefault();
+    setModal(true);
     props.G[player].grave.map(g => {
       console.log('Card: ', g)
     })
@@ -62,6 +64,7 @@ const PlayerGameBoard = ({props}) => {
       onClick = {e => graveCheck(e, 0)}>
           Graveyard: {props.G[0].grave.length}
       </div>
+       {modal === true && <GraveModal modal = {modal} setModal={setModal} grave = {props.G[0].grave}/>} 
           <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
            onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer,0)}>
             Deck: {props.G[0].deck.length}
