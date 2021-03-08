@@ -5,11 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "serve": "node -r esm server.js"
   },
   "dependencies": {
+    "bgio-firebase": "^0.3.1",
     "boardgame.io": "^0.43.2",
+    "esm": "^3.2.25",
+    "firebase-admin": "^9.5.0",
     "next": "10.0.7",
+    "node-persist": "^3.1.0",
     "react": "17.0.1",
     "react-dnd": "^13.0.0",
     "react-dnd-html5-backend": "^12.1.0",

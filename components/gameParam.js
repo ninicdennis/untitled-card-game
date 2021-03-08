@@ -99,7 +99,6 @@ const confirmAttack = (G, ctx, cardSelected, position) => {
   }
 }
 
-
 const cardSet = [
   {
     id: 0,                // Id for card.
@@ -135,7 +134,7 @@ const cardSet = [
     effect: 'Nothing.'
   }
 ]
-const GameParam = {
+export const GameParam = {
   setup: () => (
     {
     [0]: {
@@ -158,6 +157,7 @@ const GameParam = {
     }
   }
   ),
+  isActive: true,
   turn: { // Stages must be set thru a useEffect checking who the active player is. A stipulation since phases get removed after they end.
     order: TurnOrder.DEFAULT,
     onBegin: (G, ctx) => {
@@ -184,5 +184,3 @@ const GameParam = {
   },
   disableUndo: true,
 }
-
-export default GameParam
