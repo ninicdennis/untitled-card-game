@@ -1,4 +1,4 @@
-import Card from './card'
+import Card from './cardInHand'
 import SummonBoard from './summonBoard'
 import CardInPlay from './cardInPlay'
 import {useEffect, useState} from 'react'
