@@ -27,6 +27,9 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [ ] More "fluff" - description, image, etc.
    - [ ] Effect: keyword effect pool.
    - [x] Hp and Def: how much they attack and defend.
+   - [ ] Summonable highlighting.
+   - [ ] Attackable highlighting.
+   - [ ] Effect highlighting (if applicable).
 - [x] Basic board layout created with drag events to specific positions
 - [x] Player "Mana Pool" 
    - [x] Mana adding function.
