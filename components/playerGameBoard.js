@@ -51,8 +51,7 @@ const PlayerGameBoard = ({props}) => {
   }
 
   return (
-    <div>
-
+    <div className = 'flex flex-col justify-center items-center'>
         <div style = {{justifyContent: 'left', display: 'flex'}} >
           {/* Other Player Graveyard */}
         <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}

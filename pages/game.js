@@ -38,9 +38,9 @@ const GameScreen = (props) => {
   const [player, setPlayer] = useState(null);
   if(player === null) {
     return (
-      <div>
-        <button onClick = { e => {setPlayer(0)}}>P0</button>
-        <button onClick = { e => {setPlayer(1)}}>P1</button>
+      <div className = 'flex justify-evenly items-center w-full h-screen'>
+        <button className = 'border-2 p-5 hover:bg-gray-200' onClick = { e => {setPlayer(0)}}>Player 0</button>
+        <button className = 'border-2 p-5 hover:bg-gray-200' onClick = { e => {setPlayer(1)}}>Player 1</button>
       </div>
     )
   } else if (player === 0) {
