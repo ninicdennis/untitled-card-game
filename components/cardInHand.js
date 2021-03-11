@@ -20,12 +20,7 @@ const Card = ({ c, handPos, cp, ctx }) => {
   );
 
   return (
-    <div
-      ref={cp == ctx.currentPlayer ? drag : null}
-      style={{
-        cursor: 'move',
-      }}
-    >
+    <div ref={cp == ctx.currentPlayer ? drag : null} className="cursor-move">
       <CardComponent c={c} handPos={handPos} cp={cp} ctx={ctx} />
     </div>
   );

@@ -48,17 +48,16 @@ const SummonBoard = ({
   return (
     <div
       ref={playerType === playerAction ? drop : null}
-      style={{ width: 200, height: 300, margin: 10, border: '1px solid black' }}
+      className="m-2 border-4 rounded-md border-double border-gray-400"
+      style={{ width: 200, height: 210 }}
     >
       {children}
       {isOver && playerType === parseInt(cp) && (
         <div
+          className="z-0 opacity-50 bg-yellow-100"
           style={{
-            height: 300,
+            height: 210,
             width: 200,
-            zIndex: 1,
-            opacity: 0.5,
-            backgroundColor: 'yellow',
           }}
         />
       )}

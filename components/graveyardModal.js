@@ -18,9 +18,7 @@ const GraveModal = ({ modal, setModal, grave }) => {
       <Modal isOpen={modal} style={customStyles} contentLabel="Example Modal">
         <button onClick={(e) => setModal(false)}>Close</button>
         <div>Graveyard:</div>
-        <div
-          style={{ display: 'flex', flexDirection: 'row', overflow: 'scroll' }}
-        >
+        <div className="flex flex-row overflow-scroll">
           {grave.map((c) => {
             return <CardComponent c={c} />;
           })}
