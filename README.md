@@ -33,13 +33,13 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [x] Mana automatically adding on turn functionality.
    - [x] Mana removal on card summon (Based on card cost).
    - [x] Mana per turn + usable mana, regenerates and keeps track of how much mana you have. 
-- [ ] Turn Phasing and order
+- [x] Turn Phasing and order
    - [x] Phasing logic setup.
    - [x] Draw Step - Drawing a card automatically on start of turn + 1 mana.
    - [x] Upkeep Step - Card summons, drag spells, etc. 
    - [x] Battle Step - Selected cards attack forward to adjacent cards for block, if not attack directly.
-   - [ ] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
-   - [ ] Endphase Step - Finishing, pass to other player.
+   - [x] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
+   - [x] Endphase Step - Finishing, pass to other player.
 - [x] Player HP tracking
    - [x] Hitpoint adding and subtracting functions.
    - [ ] On damage step calculations.
@@ -51,12 +51,21 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [x] Tapped attack card if survived step.
 - [ ] Graveyard
    - [x] Initial layout and position.
-   - [ ] Modal view to show current cards in your graveyard.
+   - [x] Modal view to show current cards in your graveyard.
    - [ ] Card reset def on destruction so it looks better.
 - [ ] "Spells" and different card types
    - [ ] Spell cards: cards you do not summon, but instead trigger.
 - [ ] End Game Screen (You Win/Lose!).
+- [ ] Multiplayer
+   - [x] Initial socket reconnection in game client / state.
+   - [x] Integrate a database to handle state management (thanks firebase!)
+   - [x] Handle State management through firebase (Turns out, bgio-firebase handles this!)
+   - [ ] Speed improvements from firebase (Possibly by paying for it?)
+   - [ ] Storing game logs elsewhere for later use.
+   - [ ] Proper connection screen, deciding player 0/1.
+   - [ ] Handling websocket disconnect, loaders, etc.
 - [ ] Database hookups, websockets for multiplayer, grabbing user data.
+
 
 - [ ] Design (This ones all the way down here because I'm not the best at it!)
 
@@ -77,12 +86,17 @@ The eventual goal once this POC is completed is to have a website built within t
 SOLUTION:  monitor.getItem() within the drop container actually holds the type value, but you must manually put this in yourself. No more random variables!
 
 - Card summoning has a bug currently where if you have 3 cards, see [here](https://github.com/react-dnd/react-dnd/issues/3123) for a bigger explination.
+
+SOLUTION: Drag state only holds the initial state on render, but will change the card position. Just moved the entire hand prop over into that container, and then set the card based off hand position.
+
+- Firebase on the server side is very slow, and takes a long time to actually update state. Possibly due to being on the free plan? 
+
 ### Getting Started
 Install the packages: 
 
 ``` npm i ```
 
-Then, un the development server: 
+Then, in the development server: 
 
 ```bash
 npm run dev
@@ -91,3 +105,11 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You will then want to add your firebase firestore admin credentials when creating the server. Head [here](https://firebase.google.com/docs/admin/setup#initialize-sdk) to learn how to get your credentials. After that, you can run the next command to open the socket port for both players.
+
+```bash
+npm run serve
+```
+
+This will open the socker port to start the game. 
