@@ -5,14 +5,19 @@ import {useEffect, useState} from 'react'
 import GraveModal from './graveyardModal'
 
 const PlayerGameBoard = ({props}) => {
-  const [modal, setModal] = useState(false)
+  const [cpModal, setCPModal] = useState(false)
+  const [opModal, setOPModal] = useState(false)
   const p = parseInt(props.ctx.currentPlayer)
   const playerStage = props.ctx.activePlayers
-  const playerView = props.playerID
-  console.log(playerView)
+  const connectedPlayer = parseInt(props.playerID) // Current players view.
+  const otherPlayer = props.playerID === '0' ? 1: 0
+
+  console.log('Connected Player: ', connectedPlayer)
+  console.log('Other Player: ', otherPlayer)
 
   const handleDeckDraw = (e, currentPlayer, playerDeck) => {
     e.preventDefault();
+    console.log(currentPlayer, playerDeck)
     if(currentPlayer == playerDeck) {
       props.moves.drawCard();
       props.moves.addMana();
@@ -40,119 +45,96 @@ const PlayerGameBoard = ({props}) => {
     e.preventDefault();
     // Checking to make sure the correct player is pressing their own card, instead of the other way around.
     // Also checking if current card is tapped.
+    console.log(player)
     if (player === parseInt(props.ctx.currentPlayer) && !cardSelected.tapped) return props.moves.confirmAttack(cardSelected, position);
     else return null;
   }
 
-  const graveCheck = (e, player) => {
-    e.preventDefault();
-    setModal(true);
-    props.G[player].grave.map(g => {
-      console.log('Card: ', g)
-    })
-  }
-
   return (
     <div>
-       {/* Deck Draw */}
-       {/* Player 1 deck */}
-       <div style = {{display: 'flex', justifyContent: 'left'}}>
-       <div style = {{display: 'flex', justifyContent: 'left'}}>
-      {/* Player 1 Graveyard */}
-      {/* For now this is a placeholder, onclick event to show the entire graveyard would be great to add. */}
-      <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
-      onClick = {e => graveCheck(e, 0)}>
-          Graveyard: {props.G[0].grave.length}
-      </div>
-       {modal === true && <GraveModal modal = {modal} setModal={setModal} grave = {props.G[0].grave}/>} 
-          <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
-           onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer,0)}>
-            Deck: {props.G[0].deck.length}
-          </div>
+
+        <div style = {{justifyContent: 'left', display: 'flex'}} >
+          {/* Other Player Graveyard */}
+        <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
+          onClick = {e => setOPModal(true)}>
+            Graveyard: {props.G[otherPlayer].grave.length}
         </div>
-      {/* Player Hand */}
-      {/* Player 1 hand */}
-      <div style = {{display: 'flex', justifyContent: 'left'}}>
-        {props.G[0].hand && props.G[0].hand.map((c, i) => {
-          return (
-            <Card key = {i} c = {c} handPos = {i} cp = {0} ctx = {props.ctx}/>
-          )
-        })}
-      </div>
+        {opModal && <GraveModal modal = {opModal} setModal={setOPModal} grave = {props.G[otherPlayer].grave}/>} 
+        {/* Other Player Deck */}
+        <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}} 
+          onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer, otherPlayer)}>
+          Deck: {props.G[otherPlayer].deck.length}
+        </div>
+        {/* Other Player Hand */}
+        <div style = {{display: 'flex', justifyContent: 'left'}}>
+          {props.G[otherPlayer].hand && props.G[otherPlayer].hand.map((c, i) => {
+            return (
+              <Card key = {i} c = {c} handPos = {i} cp = {otherPlayer} ctx = {props.ctx}/>
+            )
+          })}
+        </div>
       </div>
       <div>
-       <p>Mana: {props.G[0].perTurnMana}/{props.G[0].mana}</p> 
-       <p>HP: {props.G[0].hp}</p> 
-      </div>
-      {/* Board Render */}
-      {/* Player 1 board */}
-      <div style = {{display: 'flex'}}>
-        {props.G[0].board.map((board, i) => {
+        {/* Other Player Mana and HP */}
+        <p>Mana: {props.G[otherPlayer].perTurnMana}/{props.G[otherPlayer].mana} HP: {props.G[otherPlayer].hp}</p> 
+        <div style = {{display: 'flex'}}>
+          {/* Other Players Summon Board */}
+        {props.G[otherPlayer].board.map((board, i) => {
           if (board == null) {
             return <SummonBoard 
                           key = {i}  position = {i} moves = {props.moves}  
-                          playerType = {0}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}
+                          playerType = {otherPlayer}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}
                           hand = {props.G[props.ctx.currentPlayer].hand}/>
           } else {
-            return <CardInPlay  key = {i} position = {i} c = {props.G[0].board[i]} confirmAttack = {confirmAttack} player = {0}/>
+            return <CardInPlay  key = {i} position = {i} c = {props.G[otherPlayer].board[i]} confirmAttack = {confirmAttack} player = {otherPlayer}/>
           }
         })
       }
       </div>
-      {/* Might find a way to fix this split for each board, I think this looks stupid. */}
-      {/* REMINDER: You have to define the specific players number in these sections in order for it to work. */}
-      {/* ======================================================================================================================================================= */}
-      {/* I probably could've just made this into one button, but i'm stupid so this is staying.  */}
-      <div style = {{display: 'flex', justifyContent: 'center', width: '100%'}}>
+      </div>  
         {playerStage && playerStage[p] === 'upkeep' && <button onClick = {e => {setStage(e,playerStage[p])}}>Enter Battle Step</button>}
         {playerStage && playerStage[p] === 'battle' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter Downkeep</button>}
         {playerStage && playerStage[p] === 'downkeep' && <button onClick = {e => {setStage(e, playerStage[p])}}>Enter EndPhase</button>}
         {props.ctx.activePlayers && <div>Current Stage: {props.ctx.activePlayers[p]}</div>}
-      </div>
-     {/* Board Render */}
-      {/* Player 2 board */}
+        {/* ============================================================================================================================= */}
       <div style = {{display: 'flex'}}>
-        {props.G[1].board.map((board, i) => {
+        {props.G[connectedPlayer].board.map((board, i) => {
           if (board == null) {
-            return <SummonBoard
-                          key = {i} position = {i} moves = {props.moves} 
-                          playerType = {1}  ctx = {props.ctx} cp = {props.ctx.currentPlayer}
+            return <SummonBoard 
+                          key = {i}  position = {i} moves = {props.moves}  
+                          playerType = {connectedPlayer}  ctx = {props.ctx}  cp = {props.ctx.currentPlayer}
                           hand = {props.G[props.ctx.currentPlayer].hand}/>
           } else {
-            return <CardInPlay  key = {i}  position = {i} c = {props.G[1].board[i]} confirmAttack = {confirmAttack} player = {1}/>
+            return <CardInPlay  key = {i} position = {i} c = {props.G[connectedPlayer].board[i]} confirmAttack = {confirmAttack} player = {connectedPlayer}/>
           }
         })
       }
       </div>
-      <div>
-      <p>Mana: {props.G[1].perTurnMana}/{props.G[1].mana}</p> 
-       <p>HP: {props.G[1].hp}</p> 
-      </div>
-       {/* Deck Draw */}
-       {/* Player 2 deck */}
-       <div style = {{display: 'flex', justifyContent: 'left'}}>
-       <div style = {{display: 'flex', justifyContent: 'left'}}>
-        {/* Player 1 Graveyard */}
-        {/* For now this is a placeholder, onclick event to show the entire graveyard would be great to add. */}
+        <div style = {{justifyContent: 'left', display: 'flex'}} >
+          {/* Current Player Graveyard */}
         <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}}
-        onClick = {e => graveCheck(e, 1)}>
-            Graveyard: {props.G[1].grave.length}
+          onClick = {e => setCPModal(true)}>
+            Graveyard: {props.G[connectedPlayer].grave.length}
         </div>
-          <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}} 
-          onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer,1)}>
-            Deck: {props.G[1].deck.length}
-          </div>
+        {cpModal && <GraveModal modal = {cpModal} setModal={setCPModal} grave = {props.G[connectedPlayer].grave}/>} 
+        {/* Current Player Deck */}
+        <div style = {{display: 'flex', width: 200, height: 300, backgroundColor: '#e3e3e3', margin: 10, alignItems: 'center', justifyContent: 'center'}} 
+          onClick = {e => handleDeckDraw(e, props.ctx.currentPlayer,connectedPlayer)}>
+          Deck: {props.G[connectedPlayer].deck.length}
         </div>
-      {/* Player Hand */}
-      {/* Player 1 hand */}
-      <div style = {{display: 'flex', justifyContent: 'left'}}>
-        {props.G[1].hand && props.G[1].hand.map((c, i) => {
-          return (
-            <Card key = {i} c = {c} handPos = {i} cp = {1} ctx = {props.ctx}/>
-          )
-        })}
+        {/* Current Player Hand */}
+        <div style = {{display: 'flex', justifyContent: 'left'}}>
+          {props.G[connectedPlayer].hand && props.G[connectedPlayer].hand.map((c, i) => {
+            return (
+              <Card key = {i} c = {c} handPos = {i} cp = {connectedPlayer} ctx = {props.ctx}/>
+            )
+          })}
+        </div>
       </div>
-      </div>
+      <div>
+        {/* Current Player Mana and HP */}
+        <p>Mana: {props.G[connectedPlayer].perTurnMana}/{props.G[connectedPlayer].mana} HP: {props.G[connectedPlayer].hp}</p> 
+      </div>  
     </div>
   )
 }

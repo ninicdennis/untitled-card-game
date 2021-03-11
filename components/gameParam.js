@@ -148,7 +148,7 @@ export const GameParam = {
     },
     [1]: {
       hp: 20,
-      mana: 0,
+      mana: 2,
       perTurnMana: 0,
       deck: cardSet,
       hand: [],
