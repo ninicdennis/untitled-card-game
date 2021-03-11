@@ -33,13 +33,13 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [x] Mana automatically adding on turn functionality.
    - [x] Mana removal on card summon (Based on card cost).
    - [x] Mana per turn + usable mana, regenerates and keeps track of how much mana you have. 
-- [ ] Turn Phasing and order
+- [x] Turn Phasing and order
    - [x] Phasing logic setup.
    - [x] Draw Step - Drawing a card automatically on start of turn + 1 mana.
    - [x] Upkeep Step - Card summons, drag spells, etc. 
    - [x] Battle Step - Selected cards attack forward to adjacent cards for block, if not attack directly.
-   - [ ] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
-   - [ ] Endphase Step - Finishing, pass to other player.
+   - [x] Offkeep Step - Card Summons, drag spells, etc. Same as upkeep but after battle.
+   - [x] Endphase Step - Finishing, pass to other player.
 - [x] Player HP tracking
    - [x] Hitpoint adding and subtracting functions.
    - [ ] On damage step calculations.
@@ -51,7 +51,7 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
    - [x] Tapped attack card if survived step.
 - [ ] Graveyard
    - [x] Initial layout and position.
-   - [ ] Modal view to show current cards in your graveyard.
+   - [x] Modal view to show current cards in your graveyard.
    - [ ] Card reset def on destruction so it looks better.
 - [ ] "Spells" and different card types
    - [ ] Spell cards: cards you do not summon, but instead trigger.
