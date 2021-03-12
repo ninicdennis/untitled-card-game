@@ -24,6 +24,9 @@
   },
   "devDependencies": {
     "@iconify-icons/mdi": "^1.1.12",
-    "@iconify/react": "^1.1.4"
+    "@iconify/react": "^1.1.4",
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.8",
+    "tailwindcss": "^2.0.3"
   }
 }
