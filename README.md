@@ -27,6 +27,13 @@ After each End Step, the chart begins at step 1, and repeats until a victor is d
   - [x] Basic card layout with name value and id.
   - [ ] More "fluff" - description, image, etc.
   - [ ] Effect: keyword effect pool.
+    - [x] Effect chaining: Have cards that can do multiple effects.
+    - [x] Bolster: Add an amount to a specific card. Used on upkeep.
+    - [ ] Weaken: Subtract an amount from parallel card.
+    - [ ] Buff: Add amount to cards surrounding.
+    - [ ] Slay: Delete adjacent card.
+    - [ ] Defend: Add only defense.
+    - [ ] Sharpen: Add only attack.
   - [x] Hp and Def: how much they attack and defend.
   - [x] Summonable highlighting.
   - [x] Attackable highlighting.
