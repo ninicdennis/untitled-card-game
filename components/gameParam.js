@@ -61,6 +61,7 @@ const unTap = (G, ctx) => {
       G[ctx.currentPlayer].board[i].tapped = false;
       G[ctx.currentPlayer].board[i].def =
         G[ctx.currentPlayer].board[i].defaultDef;
+      G[ctx.currentPlayer].board[i].effectTapped = false;
     }
   });
 };
@@ -111,6 +112,20 @@ const confirmAttack = (G, ctx, cardSelected, position) => {
   }
 };
 
+const bolsterCard = (G, ctx, cardSelected, position, amount) => {
+  console.log('This card: ', cardSelected, 'Position: ', position);
+  const defaultSelectedCard = G[ctx.currentPlayer].board[position];
+  if (!defaultSelectedCard.effectTapped) {
+    defaultSelectedCard.atk += amount;
+    defaultSelectedCard.def += amount;
+    defaultSelectedCard.defaultAtk += amount;
+    defaultSelectedCard.defaultDef += amount;
+    defaultSelectedCard.effectTapped = true;
+  } else {
+    return INVALID_MOVE;
+  }
+};
+
 const cardSet = [
   {
     id: 0, // Id for card.
@@ -121,7 +136,8 @@ const cardSet = [
     defaultAtk: 1, // Cards default akt value, restores after turn.
     defaultDef: 1, // Cards devault def value, restores after turn.
     tapped: false, // A card that has attacked already.
-    effect: 'Nothing.', // Effects (WIP, probably will be object).
+    effectTapped: false, // A card that has used its effect already.
+    effect: ['bolster'], // Effects (WIP, probably will be object).
   },
   {
     id: 1,
@@ -132,7 +148,8 @@ const cardSet = [
     defaultAtk: 2,
     defaultDef: 1,
     tapped: false,
-    effect: 'Nothing.',
+    effectTapped: false,
+    effect: ['bolster'],
   },
   {
     id: 1,
@@ -143,7 +160,8 @@ const cardSet = [
     defaultAtk: 1,
     defaultDef: 2,
     tapped: false,
-    effect: 'Nothing.',
+    effectTapped: false,
+    effect: ['bolster'],
   },
 ];
 export const GameParam = {
@@ -180,13 +198,13 @@ export const GameParam = {
         next: 'upkeep', // Next effect moves on to the next described one .
       },
       upkeep: {
-        moves: { summonCard, addHp, removeHp },
+        moves: { summonCard, addHp, removeHp, bolsterCard },
       },
       battle: {
         moves: { addHp, removeHp, confirmAttack },
       },
       downkeep: {
-        moves: { summonCard, addHp, removeHp },
+        moves: { summonCard, addHp, removeHp, bolsterCard },
       },
       end: {
         moves: {},

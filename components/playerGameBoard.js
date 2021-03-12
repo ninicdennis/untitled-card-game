@@ -51,6 +51,19 @@ const PlayerGameBoard = ({ props }) => {
     else return null;
   };
 
+  const bolsterCard = (e, cardSelected, position, player) => {
+    e.preventDefault();
+    console.log(
+      'cardSelected, position, player',
+      cardSelected,
+      position,
+      player,
+    );
+    if (player === parseInt(props.ctx.currentPlayer)) {
+      return props.moves.bolsterCard(cardSelected, position, 1); // third variable will be to add more to it, probably change this in the future.
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="flex w-full justify-center">
@@ -126,6 +139,7 @@ const PlayerGameBoard = ({ props }) => {
                 c={props.G[otherPlayer].board[i]}
                 confirmAttack={confirmAttack}
                 player={otherPlayer}
+                canUseEffect={false}
               />
             );
           }
@@ -219,6 +233,8 @@ const PlayerGameBoard = ({ props }) => {
                 confirmAttack={confirmAttack}
                 player={connectedPlayer}
                 playerPhase={playerStage[connectedPlayer]}
+                bolsterCard={bolsterCard}
+                canUseEffect={true}
               />
             );
           }
