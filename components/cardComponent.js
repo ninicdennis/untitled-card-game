@@ -3,10 +3,13 @@ import swordIcon from '../node_modules/@iconify-icons/mdi/sword';
 import shieldIcon from '../node_modules/@iconify-icons/mdi/shield';
 import hexagon from '../node_modules/@iconify-icons/mdi/hexagon-slice-3';
 
-const CardComponent = ({ c }) => {
+const CardComponent = ({ c, playable, attackable }) => {
+  console.log(attackable);
   return (
     <div
-      className="flex flex-col items-center justify-between bg-indigo-400 m-2 rounded-md"
+      className={`flex flex-col items-center justify-between bg-indigo-400 m-2 rounded-md ring-${
+        playable ? 'pink' : 'red'
+      }-400 ring-${playable ? 4 : attackable ? 4 : 0}`}
       style={{ width: 200, height: 210 }}
     >
       <div className="flex justify-between w-11/12">

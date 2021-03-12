@@ -150,7 +150,7 @@ export const GameParam = {
   setup: () => ({
     [0]: {
       hp: 20,
-      mana: 2, // Max 10,
+      mana: 0, // Max 10,
       perTurnMana: 0,
       deck: cardSet,
       hand: [],
@@ -159,7 +159,7 @@ export const GameParam = {
     },
     [1]: {
       hp: 20,
-      mana: 2,
+      mana: 0,
       perTurnMana: 0,
       deck: cardSet,
       hand: [],

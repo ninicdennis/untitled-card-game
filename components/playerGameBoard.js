@@ -17,7 +17,7 @@ const PlayerGameBoard = ({ props }) => {
 
   const handleDeckDraw = (e, currentPlayer, playerDeck) => {
     e.preventDefault();
-    console.log(currentPlayer, playerDeck);
+    console.log('CP PD: ', currentPlayer, playerDeck);
     if (currentPlayer == playerDeck) {
       props.moves.drawCard();
       props.moves.addMana();
@@ -53,38 +53,39 @@ const PlayerGameBoard = ({ props }) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex justify-left w-4/5">
-        {/* Other Player Deck */}
-        <div
-          className="flex m-2 justify-center items-center rounded-md bg-gray-200"
-          style={{
-            width: 200,
-            height: 210,
-          }}
-          onClick={(e) =>
-            handleDeckDraw(e, props.ctx.currentPlayer, otherPlayer)
-          }
-        >
-          Deck: {props.G[otherPlayer].deck.length}
-        </div>
-        {/* Other Player Hand */}
-        <div className="flex justify-left ">
-          {props.G[otherPlayer].hand &&
-            props.G[otherPlayer].hand.map((c, i) => {
-              return (
-                <Card
-                  key={i}
-                  c={c}
-                  handPos={i}
-                  cp={otherPlayer}
-                  ctx={props.ctx}
-                />
-              );
-            })}
+      <div className="flex w-full justify-center">
+        <div className="flex justify-left w-3/4">
+          {/* Other Player Deck */}
+          <div
+            className="flex m-2 justify-center items-center rounded-md bg-gray-200"
+            style={{
+              width: 200,
+              height: 210,
+            }}
+            onClick={(e) =>
+              handleDeckDraw(e, props.ctx.currentPlayer, otherPlayer)
+            }
+          >
+            Deck: {props.G[otherPlayer].deck.length}
+          </div>
+          {/* Other Player Hand */}
+          <div className="flex justify-left ">
+            {props.G[otherPlayer].hand &&
+              props.G[otherPlayer].hand.map((c, i) => {
+                return (
+                  <Card
+                    key={i}
+                    c={c}
+                    handPos={i}
+                    cp={otherPlayer}
+                    ctx={props.ctx}
+                  />
+                );
+              })}
+          </div>
         </div>
       </div>
-
-      <div className="flex w-4/5">
+      <div className="flex w-4/5 justify-center">
         {/* Other Player Graveyard */}
         <div
           className="flex m-2 justify-center items-center rounded-md bg-purple-900 text-white"
@@ -130,11 +131,12 @@ const PlayerGameBoard = ({ props }) => {
           }
         })}
       </div>
-      {/* Other Player Mana and HP */}
-      <div className="flex jusitfy-evenly items-center w-3/4">
+
+      <div className="flex justify-around items-center w-3/4">
+        {/* Current Player Mana and HP */}
         <p>
-          Mana: {props.G[otherPlayer].perTurnMana}/{props.G[otherPlayer].mana}{' '}
-          HP: {props.G[otherPlayer].hp}
+          Mana: {props.G[connectedPlayer].perTurnMana}/
+          {props.G[connectedPlayer].mana} HP: {props.G[connectedPlayer].hp}
         </p>
         {playerStage && playerStage[p] === 'upkeep' && (
           <button
@@ -169,14 +171,14 @@ const PlayerGameBoard = ({ props }) => {
         {props.ctx.activePlayers && (
           <div>Current Stage: {props.ctx.activePlayers[p]}</div>
         )}
-        {/* Current Player Mana and HP */}
+        {/* Other Player Mana and HP */}
         <p>
-          Mana: {props.G[connectedPlayer].perTurnMana}/
-          {props.G[connectedPlayer].mana} HP: {props.G[connectedPlayer].hp}
+          Mana: {props.G[otherPlayer].perTurnMana}/{props.G[otherPlayer].mana}{' '}
+          HP: {props.G[otherPlayer].hp}
         </p>
       </div>
       {/* ============================================================================================================================= */}
-      <div className="flex w-4/5">
+      <div className="flex w-4/5 justify-center">
         {/* Current Player Graveyard */}
         <div
           className="flex justify-center items-center m-2 rounded-md bg-purple-900 text-white"
@@ -216,42 +218,46 @@ const PlayerGameBoard = ({ props }) => {
                 c={props.G[connectedPlayer].board[i]}
                 confirmAttack={confirmAttack}
                 player={connectedPlayer}
+                playerPhase={playerStage[connectedPlayer]}
               />
             );
           }
         })}
       </div>
-      <div className="flex justify-left w-4/5">
-        {/* Current Player Deck */}
-        <div
-          className="flex justify-center items-center m-2 rounded-md bg-gray-200"
-          style={{
-            width: 200,
-            height: 210,
-          }}
-          onClick={(e) =>
-            handleDeckDraw(e, props.ctx.currentPlayer, connectedPlayer)
-          }
-        >
-          Deck: {props.G[connectedPlayer].deck.length}
-        </div>
-        {/* Current Player Hand */}
-        <div className="flex justify-left">
-          {props.G[connectedPlayer].hand &&
-            props.G[connectedPlayer].hand.map((c, i) => {
-              return (
-                <Card
-                  key={i}
-                  c={c}
-                  handPos={i}
-                  cp={connectedPlayer}
-                  ctx={props.ctx}
-                />
-              );
-            })}
+      <div className="flex w-3/4 justify-left">
+        <div className="flex justify-left w-4/5">
+          {/* Current Player Deck */}
+          <div
+            className="flex justify-center items-center m-2 rounded-md bg-gray-200"
+            style={{
+              width: 200,
+              height: 210,
+            }}
+            onClick={(e) =>
+              handleDeckDraw(e, props.ctx.currentPlayer, connectedPlayer)
+            }
+          >
+            Deck: {props.G[connectedPlayer].deck.length}
+          </div>
+          {/* Current Player Hand */}
+          <div className="flex justify-left">
+            {props.G[connectedPlayer].hand &&
+              props.G[connectedPlayer].hand.map((c, i) => {
+                return (
+                  <Card
+                    key={i}
+                    c={c}
+                    handPos={i}
+                    cp={connectedPlayer}
+                    ctx={props.ctx}
+                    playerStage={playerStage[connectedPlayer]}
+                    playerMana={props.G[connectedPlayer].perTurnMana}
+                  />
+                );
+              })}
+          </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 };
